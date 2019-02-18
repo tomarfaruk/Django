@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Home page</title>
+{% endblock %}
+
+{% block containt %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+            <h1>Home page</h1>
+            <h4>Post title</h4>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.post }}
+                <br>
+                <button class="btn btn-primary">Submit</button>
+            <br>
+            <br>
+                {% if posts %}
+                    {% for p in posts %}
+                        <h4>{{ p.post }}</h4>
+                        <p>Posted by: {{ p.post_user }} date: {{ p.post_date }}</p>
+                    {% endfor %}
+                {% endif %}
+            </form>
+        </div>
+
+            <div class="col-md-4">
+                {% if users|length != friends|length  %}
+                    <h2>Other people</h2>
+                        {% for user in users %}
+                            <p>
+                                {% if not user in friends %}
+                                    <a href="{% url 'accounts:profile_pk' p_id=user.id %}" >{{ user.username }}</a>
+                                    <a href="{% url 'home:change_friend' action='add' f_id=user.id %}" class="btn btn-primary">add friend</a>
+                                {% endif %}
+                            </p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if friends %}
+                    <h2>Your Friends</h2>
+                        {% for friend in friends %}
+                            <p>
+                                <a href="{% url 'accounts:profile_pk' p_id=friend.id %}" >{{ friend.username }}</a>
+                                <a  class="btn btn-primary" href="{% url 'home:change_friend' action='remove' f_id=friend.id %}">Delete</a>
+                            </p>
+                        {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

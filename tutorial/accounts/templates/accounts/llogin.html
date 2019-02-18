@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>login form</title>
+{% endblock %}
+
+{% block containt %}
+ <form action="" method="POST">
+ {% csrf_token %}
+ {{ form.as_p }}
+ <button>login</button>
+</form>
+
+{# Assumes you setup the password_reset view in your URLconf #}
+{#<p><a href="{% url 'password_reset' %}">Lost password?</a></p>#}
+
+{% endblock %}

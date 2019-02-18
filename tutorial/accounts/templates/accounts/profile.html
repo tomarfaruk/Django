@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Profile</title>
+{% endblock %}
+{% block containt %}
+    <div class="container">
+        <h1>Wellcome to your profile</h1>
+        <p>fist name: {{ user.fast_name }}</p>
+        <p>last name: {{ user.last_name }}</p>
+        <p>user name: {{ user.userprofile }}</p>
+        <p>city: {{ user.userprofile.city }}</p>
+        {% if user.userprofile.image %}
+            <img src="{{ user.userprofile.image.url }}" alt="image not found" width="300" height="300">
+        <img src="" alt="">
+        {% endif %}
+        <a href="{% url 'accounts:edit_profile' %}">{{ user.get_full_name }}</a>
+    </div>
+{% endblock %}
